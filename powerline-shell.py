@@ -86,7 +86,7 @@ class Powerline:
     def draw(self):
         shifted = self.segments[1:] + [None]
         return (''.join((c.draw(n) for c, n in zip(self.segments, shifted)))
-                + self.reset).encode('utf-8')
+                + self.reset + ' ').encode('utf-8')
 
 
 class Segment:
