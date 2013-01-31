@@ -333,7 +333,7 @@ if __name__ == '__main__':
     #p.append(Segment(p, ' \\h ', 250, 238))
     add_cwd_segment(p, cwd, 5, args.cwd_only)
     add_repo_segment(p, cwd)
-    add_root_indicator(p, args.prev_error)
+    # add_root_indicator(p, args.prev_error)
     sys.stdout.write(p.draw())
 
 # vim: set expandtab:
