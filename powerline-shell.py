@@ -35,7 +35,7 @@ class Color:
     SVN_CHANGES_FG = 22  # dark green
 
     VIRTUAL_ENV_BG = 35  # a mid-tone green
-    VIRTUAL_ENV_FG = 22
+    VIRTUAL_ENV_FG = 00
 
 
 class Powerline:
@@ -47,7 +47,11 @@ class Powerline:
         'patched': {
             'separator': u'\u2B80',
             'separator_thin': u'\u2B81'
-        }
+        },
+        'flat': {
+            'separator': '',
+            'separator_thin': ''
+        },
     }
 
     color_templates = {
@@ -126,7 +130,7 @@ def add_cwd_segment(powerline, cwd, maxdepth, cwd_only=False):
     if cwd[0] == '/':
         cwd = cwd[1:]
 
-    names = cwd.split('/')
+    names = cwd.split(os.sep)
     if len(names) > maxdepth:
         names = names[:2] + [u'\u2026'] + names[2 - maxdepth:]
 
@@ -238,7 +242,7 @@ def add_svn_segment(powerline, cwd):
         'I' Ignored
         'M' Modified
         'R' Replaced
-        'X' an unversioned directory created by an externals definition
+        'X' a directory pulled in by an svn:externals definition
         '?' item is not under version control
         '!' item is missing (removed by non-svn command) or incomplete
          '~' versioned item obstructed by some item of a different kind
@@ -248,7 +252,7 @@ def add_svn_segment(powerline, cwd):
         #cmd = '"svn status | grep -c "^[ACDIMRX\\!\\~]"'
         p1 = subprocess.Popen(['svn', 'status'], stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE)
-        p2 = subprocess.Popen(['grep', '-c', '^[ACDIMRX\\!\\~]'],
+        p2 = subprocess.Popen(['grep', '-c', '^[ACDIMR\\!\\~]'],
                 stdin=p1.stdout, stdout=subprocess.PIPE)
         output = p2.communicate()[0].strip()
         if len(output) > 0 and int(output) > 0:
